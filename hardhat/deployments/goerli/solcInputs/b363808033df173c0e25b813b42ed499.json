@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Disperse.sol": {
+      "content": "/**\n *Submitted for verification at Etherscan.io on 2018-10-22\n */\n// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ninterface IERC20 {\n    function transfer(address to, uint256 value) external returns (bool);\n\n    function transferFrom(\n        address from,\n        address to,\n        uint256 value\n    ) external returns (bool);\n}\n\ncontract Disperse {\n    address owner;\n\n    constructor() {\n        owner = msg.sender;\n    }\n\n    function disperseEther(address[] memory recipients, uint256[] memory values)\n        external\n        payable\n    {\n        for (uint256 i = 0; i < recipients.length; i++)\n            payable(recipients[i]).transfer(values[i]);\n        uint256 balance = address(this).balance;\n        if (balance > 0) payable(msg.sender).transfer(balance);\n    }\n\n    function disperseToken(\n        IERC20 token,\n        address[] memory recipients,\n        uint256[] memory values\n    ) external {\n        uint256 total = 0;\n        for (uint256 i = 0; i < recipients.length; i++) total += values[i];\n        require(token.transferFrom(msg.sender, address(this), total));\n        for (uint i = 0; i < recipients.length; i++)\n            require(token.transfer(recipients[i], values[i]));\n    }\n\n    function disperseTokenSimple(\n        IERC20 token,\n        address[] memory recipients,\n        uint256[] memory values\n    ) external {\n        for (uint256 i = 0; i < recipients.length; i++) {\n            require(token.transferFrom(msg.sender, recipients[i], values[i]));\n        }\n    }\n\n    function withdraw() public payable {\n        uint256 balance = address(this).balance;\n        if (balance > 0) payable(owner).transfer(balance);\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
