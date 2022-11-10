@@ -6,7 +6,7 @@ import { Paper, Box, Card, Typography } from '@mui/material';
 import Calender from '../components/Tools/Calender';
 
 import { useState } from 'react';
-export default function Home(props) {
+export default function Home() {
   const theme = useTheme();
 
   const Container = styled('div')(({ them }) => ({
@@ -51,7 +51,9 @@ export default function Home(props) {
                 padding: '1rem 6rem',
               }}
               elevation={1}
-            ></Paper>
+            >
+              <Calender />
+            </Paper>
             <Paper
               sx={{
                 width: '100%',
@@ -64,9 +66,9 @@ export default function Home(props) {
             >
               <Typography variant='h3'>Daily Task</Typography>
               <Box sx={{ display: 'grid' }}>
+                {/* <Typography variant='h2'>Bashboard</Typography>
                 <Typography variant='h2'>Bashboard</Typography>
-                <Typography variant='h2'>Bashboard</Typography>
-                <Typography variant='h2'>Bashboard</Typography>
+                <Typography variant='h2'>Bashboard</Typography> */}
               </Box>
             </Paper>
           </Container>

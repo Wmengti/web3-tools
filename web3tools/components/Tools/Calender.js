@@ -25,10 +25,10 @@ import { style } from '@mui/system';
 import { useState } from 'react';
 import { useAccount } from 'wagmi';
 
-const Calender = (props) => {
+const Calender = () => {
   const theme = useTheme();
   const { address } = useAccount();
-  const [data, setData] = useState(props.downData);
+  const [data, setData] = useState();
 
   const [AppointmentColor, SetAppointmentColor] = useState();
   console.log(AppointmentColor);
@@ -95,8 +95,12 @@ const Calender = (props) => {
     setData((prevData) => {
       if (added) {
         const startingAddedId =
-          prevData.length > 0 ? prevData[prevData.length - 1].id + 1 : 0;
-        data = [...prevData, { id: startingAddedId, ...added }];
+          prevData?.length > 0 ? prevData[prevData.length - 1].id + 1 : 0;
+        if (prevData) {
+          data = [...prevData, { id: startingAddedId, ...added }];
+        } else {
+          data = [{ id: startingAddedId, ...added }];
+        }
       }
       if (changed) {
         data = prevData.map((appointment) =>
