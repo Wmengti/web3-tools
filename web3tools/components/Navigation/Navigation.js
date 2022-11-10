@@ -196,12 +196,12 @@ export default function Navigation(props) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        {/* <List>
           <ToolItem text={'Calender'} open={open} to={`/${address}`}>
             <InboxIcon />
           </ToolItem>
         </List>
-        <Divider />
+        <Divider /> */}
         <List>
           <ToolItem text={'batch send'} open={open} to={'/batch-send-token'}>
             <InboxIcon />
